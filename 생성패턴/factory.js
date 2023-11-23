@@ -33,7 +33,8 @@ const RadioButton = class extends Button {
   }
 };
 
-// simple factory
+// simple factory - 행위(함수)에 따른 다른 결과 값
+// 객체의 생성 코드를 캡슐화 한다.
 
 class InputDerectory extends Array {
   get(element) {
@@ -56,7 +57,7 @@ inputDerectory.add(Button);
 
 console.log(inputDerectory.get(RadioInput));
 
-//absctract factory
+//absctract factory - 설정 값에 따라 그 설정에 따른 결과가 나옴
 
 class UIFactory {
   getButton() {
@@ -98,3 +99,27 @@ const renderer = new Renderer();
 
 renderer.setFactory(RadioUIFactory);
 renderer.drawInput();
+
+// factory method - 상속을 통해 '하위 클래스'에서 객체 생성 로직을 책임짐
+
+class PaintingBox {
+  paint() {
+    const input = this._getInput();
+    input.style = "border: 1px solid red";
+    return input;
+  }
+}
+
+class TextPaintingBox extends PaintingBox {
+  _getInput() {
+    return inputDerectory.get(TextInput);
+  }
+}
+
+class SubmitPaintingBox extends PaintingBox {
+  _getInput() {
+    return inputDerectory.get(SubmitInput);
+  }
+}
+
+console.log(new TextPaintingBox().paint());
